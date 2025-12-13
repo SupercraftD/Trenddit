@@ -123,7 +123,7 @@ document.getElementById("fetch").addEventListener("click", async () => {
     chartInstances.myChart = createPostsOverTimeChart(cachedPosts, "myChart", timeframe);
     chartInstances.subredditChart = createPostsPerSubredditChart(cachedPosts, "subredditChart");
     chartInstances.keywordChart = createKeywordTrendChart(cachedPosts, keyword, "keywordChart", timeframe);
-    output.textContent = JSON.stringify(cachedPosts, null, 2);
+    output.textContent = `Loaded ${cachedPosts.length} posts from cache`;
     return;
   }
 
@@ -144,7 +144,7 @@ document.getElementById("fetch").addEventListener("click", async () => {
     chartInstances.myChart = createPostsOverTimeChart(posts, "myChart", timeframe);
     chartInstances.subredditChart = createPostsPerSubredditChart(posts, "subredditChart");
     chartInstances.keywordChart = createKeywordTrendChart(posts, keyword, "keywordChart", timeframe);
-    output.textContent = JSON.stringify(posts, null, 2);
+    output.textContent = `Loaded ${posts.length} posts successfully`;
   } catch (err) {
     clearInterval(loading);
     output.textContent = `Error: ${err.message}`;
