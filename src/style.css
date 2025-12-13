@@ -80,15 +80,6 @@ body {
   
 }
 
-.navbar {
-    top: 0;
-    z-index:10;
-
-    background:rgba(0, 0, 0, 0.45);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(255,255,255,0.12);
-}
-
 .right {
     font-weight:700;
     font-size:18px;
