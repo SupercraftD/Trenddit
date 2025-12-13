@@ -1,3 +1,18 @@
+body {
+    color: #e5e7eb;
+  margin: 0;
+  min-height: 100vh;
+
+  background-image: url("/bred.jpg");
+
+
+  background-size: cover;        
+  background-position: center;   
+  background-repeat: no-repeat;  
+  background-attachment: fixed;  
+
+  text-align: center;
+}
 
 #container{
     display: flex;
@@ -6,16 +21,20 @@
 }
 
 canvas {
-    border: 1px solid black;
     width: 50%;
     height: auto;
 }
 
 #infopanel{
+    text-align: left;
     border: 1px solid black;
     width:50%;
     margin:50px;
-    background-color: white;
-    color:black;
+    color:white;
+    background-color: rgba(0, 0, 0, 0.46);
     padding:25px;
+}
+
+#infopanel a{
+    color: lightblue;
 }

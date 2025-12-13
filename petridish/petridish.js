@@ -129,7 +129,7 @@ async function drawPetriDish(time){
     const width = canvas.width;
     const height = canvas.height;
 
-    // Fill the canvas with a light grid background
+    /*// Fill the canvas with a light grid background
     ctx.fillStyle = '#ffffffff';
     ctx.strokeStyle = '#d4d4d4ff';
 
@@ -139,8 +139,9 @@ async function drawPetriDish(time){
             ctx.fillRect(x, y, gridSize - 1, gridSize - 1);
             ctx.strokeRect(x, y, gridSize, gridSize);
         }
-    }
-    
+    }*/
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
     // Draw a simple circle in the center
     ctx.fillStyle = "#ffffff";
     ctx.strokeStyle = "#000000";
@@ -205,7 +206,7 @@ function drawCircles(){
     const width = canvas.width;
     const height = canvas.height;
 
-    // Fill the canvas with a light grid background
+    /*// Fill the canvas with a light grid background
     ctx.fillStyle = '#ffffffff';
     ctx.strokeStyle = '#d4d4d4ff';
 
@@ -215,8 +216,9 @@ function drawCircles(){
             ctx.fillRect(x, y, gridSize - 1, gridSize - 1);
             ctx.strokeRect(x, y, gridSize, gridSize);
         }
-    }
-    
+    }*/
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
     // Draw a simple circle in the center
     ctx.fillStyle = "#ffffff";
     ctx.strokeStyle = "#000000";
