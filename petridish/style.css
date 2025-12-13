@@ -3,7 +3,7 @@ body {
   margin: 0;
   min-height: 100vh;
 
-  background-image: url("/bred.jpg");
+  background-image: url("/bg2.jpg");
 
 
   background-size: cover;        
@@ -27,7 +27,6 @@ canvas {
 
 #infopanel{
     text-align: left;
-    border: 1px solid black;
     width:50%;
     margin:50px;
     color:white;
