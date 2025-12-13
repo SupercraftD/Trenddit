@@ -4,15 +4,17 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/graphs.css" />
+    <link rel="stylesheet" href="./graphs.css" />
     <link rel="stylesheet" href = "/src/style.css"/>
+    
     <title>Trenddit</title>
   </head>
   <body>
     <div id="app">
 
-      <h1>Trenddit</h1>
-
+      <h1>Graphs</h1>
+      <h2>Visualize reddit trends over time with post counts, subreddit activity, and longitudinal keyword search</h2>
+      <br>
       <div>
         <label for="timeframe">Timeframe:</label>
         <select id="timeframe">
@@ -21,17 +23,19 @@
           <option value="all">All Time</option>
         </select>
       </div>
-
+      <br>
       <div>
         <label for="keyword">Keyword Search:</label>
         <input type="text" id="keyword" placeholder="Enter keyword (e.g., cat)" value="cat">
       </div>
-
+      <br>
       <button id="fetch">Fetch Posts</button>
 
 
       <canvas id="myChart"></canvas>
+      <br><br><br><br><br><br>
       <canvas id="subredditChart"></canvas>
+      <br><br><br><br><br><br>
       <canvas id="keywordChart"></canvas>
       <pre id="output"></pre>
 

@@ -71,6 +71,15 @@ body {
   text-decoration: underline;
 }
 
+#timeframe {
+  background-color: black;
+  color:wheat
+}
+#timeframe option {
+  color:white
+  
+}
+
 .navbar {
     top: 0;
     z-index:10;
