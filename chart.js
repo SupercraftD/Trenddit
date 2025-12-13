@@ -4,15 +4,26 @@ import Chart from 'chart.js/auto';
  * Creates a simple line chart showing number of posts over time
  * @param {Array} posts - Array of Reddit posts from main.js
  * @param {string} canvasId - ID of the canvas element
+ * @param {string} timeframe - Timeframe for grouping (day, week, month, all)
  */
-export function createPostsOverTimeChart(posts, canvasId) {
-  // Group posts by date
+export function createPostsOverTimeChart(posts, canvasId, timeframe = 'month') {
+  // Group posts by date or hour depending on timeframe
   const postsByDate = {};
+  const isHourly = timeframe === 'day';
 
   posts.forEach(post => {
-    // Convert Unix timestamp to date string (YYYY-MM-DD)
     const date = new Date(post.createdUtc * 1000);
-    const dateKey = date.toISOString().split('T')[0];
+    let dateKey;
+
+    if (isHourly) {
+      // Group by hour for daily timeframe
+      const hour = date.getHours();
+      const dateStr = date.toISOString().split('T')[0];
+      dateKey = `${dateStr} ${hour.toString().padStart(2, '0')}:00`;
+    } else {
+      // Group by date for other timeframes
+      dateKey = date.toISOString().split('T')[0];
+    }
 
     if (!postsByDate[dateKey]) {
       postsByDate[dateKey] = 0;
@@ -31,7 +42,7 @@ export function createPostsOverTimeChart(posts, canvasId) {
     data: {
       labels: sortedDates,
       datasets: [{
-        label: 'Posts per Day',
+        label: isHourly ? 'Posts per Hour' : 'Posts per Day',
         data: counts,
         borderColor: 'rgb(75, 192, 192)',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
@@ -43,7 +54,7 @@ export function createPostsOverTimeChart(posts, canvasId) {
       plugins: {
         title: {
           display: true,
-          text: 'Reddit Posts Over Time'
+          text: isHourly ? 'Reddit Posts by Hour' : 'Reddit Posts Over Time'
         }
       },
       scales: {
@@ -57,7 +68,7 @@ export function createPostsOverTimeChart(posts, canvasId) {
         x: {
           title: {
             display: true,
-            text: 'Date'
+            text: isHourly ? 'Hour' : 'Date'
           }
         }
       }
@@ -197,16 +208,28 @@ export function createPostsPerSubredditChart(posts, canvasId) {
  * @param {Array} posts - Array of Reddit posts
  * @param {string} keyword - Keyword to track (case-insensitive)
  * @param {string} canvasId - ID of the canvas element
+ * @param {string} timeframe - Timeframe for grouping (day, week, month, all)
  */
-export function createKeywordTrendChart(posts, keyword, canvasId) {
-  // Group posts by date and count keyword mentions
+export function createKeywordTrendChart(posts, keyword, canvasId, timeframe = 'month') {
+  // Group posts by date or hour and count keyword mentions
   const keywordByDate = {};
   const totalByDate = {};
   const lowerKeyword = keyword.toLowerCase();
+  const isHourly = timeframe === 'day';
 
   posts.forEach(post => {
     const date = new Date(post.createdUtc * 1000);
-    const dateKey = date.toISOString().split('T')[0];
+    let dateKey;
+
+    if (isHourly) {
+      // Group by hour for daily timeframe
+      const hour = date.getHours();
+      const dateStr = date.toISOString().split('T')[0];
+      dateKey = `${dateStr} ${hour.toString().padStart(2, '0')}:00`;
+    } else {
+      // Group by date for other timeframes
+      dateKey = date.toISOString().split('T')[0];
+    }
 
     // Initialize counters if needed
     if (!keywordByDate[dateKey]) {
@@ -266,7 +289,7 @@ export function createKeywordTrendChart(posts, keyword, canvasId) {
       plugins: {
         title: {
           display: true,
-          text: `Keyword Trend: "${keyword}" Over Time`
+          text: `Keyword Trend: "${keyword}" ${isHourly ? 'by Hour' : 'Over Time'}`
         }
       },
       scales: {
@@ -297,7 +320,7 @@ export function createKeywordTrendChart(posts, keyword, canvasId) {
         x: {
           title: {
             display: true,
-            text: 'Date'
+            text: isHourly ? 'Hour' : 'Date'
           }
         }
       }

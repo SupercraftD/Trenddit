@@ -10,7 +10,7 @@ async function fetchRedditPage(subreddit, time, after = null) {
   const params = new URLSearchParams({ t: time, limit: LIMIT });
   if (after) params.set("after", after);
 
-  const url = `${REDDIT_BASE}/r/${subreddit}/top.json?${params.toString()}`;  
+  const url = `${REDDIT_BASE}/r/${subreddit}/top.json?${params.toString()}`;
   const proxiedUrl = CORS_PROXY + encodeURIComponent(url);
 
   const res = await fetch(proxiedUrl, {
@@ -66,11 +66,14 @@ document.getElementById("fetch").addEventListener("click", async () => {
   }, 500);
   try {
     const subreddit = "all";
-    const posts = await fetchRedditAll(subreddit, "month", 10);
+    const timeframe = document.getElementById("timeframe").value;
+    const keyword = document.getElementById("keyword").value;
+
+    const posts = await fetchRedditAll(subreddit, timeframe, 10);
     clearInterval(loading);
-    createPostsOverTimeChart(posts, "myChart");
+    createPostsOverTimeChart(posts, "myChart", timeframe);
     createPostsPerSubredditChart(posts, "subredditChart");
-    createKeywordTrendChart(posts, "cat", "keywordChart");
+    createKeywordTrendChart(posts, keyword, "keywordChart", timeframe);
     output.textContent = JSON.stringify(posts, null, 2);
   } catch (err) {
     output.textContent = `Error: ${err.message}`;
