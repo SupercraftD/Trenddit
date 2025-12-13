@@ -1,4 +1,28 @@
 
+// Cache for storing fetched posts by timeframe
+const CACHE_KEY = 'reddit_posts_cache';
+const cache = {
+  get(timeframe) {
+    try {
+      const cached = localStorage.getItem(CACHE_KEY);
+      if (!cached) return null;
+      const data = JSON.parse(cached);
+      return data[timeframe] || null;
+    } catch (e) {
+      return null;
+    }
+  },
+  set(timeframe, posts) {
+    try {
+      const cached = localStorage.getItem(CACHE_KEY);
+      const data = cached ? JSON.parse(cached) : {};
+      data[timeframe] = posts;
+      localStorage.setItem(CACHE_KEY, JSON.stringify(data));
+    } catch (e) {
+      console.error('Failed to cache data:', e);
+    }
+  }
+};
 
 const REDDIT_BASE = "https://www.reddit.com";
 const CORS_PROXY = "https://corsproxy.io/?";
@@ -78,7 +102,11 @@ async function getDistributions(time){
         return distributions[time];
     }else{
         console.log("FETCHING DISTRIBUTION")
-        const posts = await fetchRedditAll("all", time, 10);
+        let posts = cache.get(time);
+        if (!posts){
+            posts = await fetchRedditAll("all", time, 10)
+            cache.set(time, posts)
+        }
         
         for (let post of posts){
             if (distributions[time][post.subreddit]){
@@ -95,7 +123,11 @@ async function getSubredditInfo(time){
     if (Object.keys(subredditInfo[time]).length > 0) {
         return subredditInfo[time];
     }else{
-        const posts = await fetchRedditAll("all", time, 10);
+        let posts = cache.get(time);
+        if (!posts){
+            posts = await fetchRedditAll("all", time, 10)
+            cache.set(time, posts)
+        }
         for (let post of posts){
             if (!subredditInfo[time][post.subreddit]){
                 subredditInfo[time][post.subreddit] = {
