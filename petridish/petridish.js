@@ -155,12 +155,12 @@ async function drawPetriDish(time){
     let giveup = false
     for (let subreddit of subreddits){
         const count = distribution[subreddit];
-        const angle = Math.random() * Math.PI * 2;
-        const radius = Math.random() * (Math.min(height,width)/2 - 40);
 
         let x, y;
         let tries = 0
         do{
+            const angle = Math.random() * Math.PI * 2;
+            const radius = Math.random() * (Math.min(height,width)/2 - 40);
             tries+=1
             x = width / 2 + radius * Math.cos(angle);
             y = height / 2 + radius * Math.sin(angle);
