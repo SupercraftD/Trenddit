@@ -54,7 +54,11 @@ export function createPostsOverTimeChart(posts, canvasId, timeframe = 'month') {
       plugins: {
         title: {
           display: true,
-          text: isHourly ? 'Reddit Posts by Hour' : 'Reddit Posts Over Time'
+          text: isHourly ? 'Reddit Posts by Hour' : 'Reddit Posts Over Time',
+          color: 'rgba(255, 255, 255, 0.9)',
+          font: {
+            size: 20
+          }
         },
         legend: {
           labels: {
@@ -141,7 +145,11 @@ export function createAverageScoreChart(posts, canvasId) {
       plugins: {
         title: {
           display: true,
-          text: 'Average Post Score Over Time'
+          text: 'Average Post Score Over Time',
+          color: 'rgba(255, 255, 255, 0.9)',
+          font: {
+            size: 20
+          }
         },
         legend: {
           labels: {
@@ -222,7 +230,11 @@ export function createPostsPerSubredditChart(posts, canvasId) {
       plugins: {
         title: {
           display: true,
-          text: 'Posts per Subreddit'
+          text: 'Posts per Subreddit',
+          color: 'rgba(255, 255, 255, 0.9)',
+          font: {
+            size: 20
+          }
         },
         legend: {
           labels: {
@@ -350,7 +362,11 @@ export function createKeywordTrendChart(posts, keyword, canvasId, timeframe = 'm
       plugins: {
         title: {
           display: true,
-          text: `Keyword Trend: "${keyword}" ${isHourly ? 'by Hour' : 'Over Time'}`
+          text: `Keyword Trend: "${keyword}" ${isHourly ? 'by Hour' : 'Over Time'}`,
+          color: 'rgba(255, 255, 255, 0.9)',
+          font: {
+            size: 20
+          }
         },
         legend: {
           labels: {
