@@ -11,7 +11,21 @@
 
       <h1>Trenddit</h1>
 
-      <button id="fetch">Fetch Posts from all past month</button>
+      <div>
+        <label for="timeframe">Timeframe:</label>
+        <select id="timeframe">
+          <option value="day">Day</option>
+          <option value="month" selected>Month</option>
+          <option value="all">All Time</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="keyword">Keyword Search:</label>
+        <input type="text" id="keyword" placeholder="Enter keyword (e.g., cat)" value="cat">
+      </div>
+
+      <button id="fetch">Fetch Posts</button>
 
       <a href="/petridish/">Petri Dish</a>
 
