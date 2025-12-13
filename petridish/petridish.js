@@ -206,12 +206,12 @@ async function drawPetriDish(time){
             tries+=1
             x = width / 2 + radius * Math.cos(angle);
             y = height / 2 + radius * Math.sin(angle);
-        }while(existingCircles.some(c => {
+        }while((existingCircles.some(c => {
             const dx = c.x - x;
             const dy = c.y - y;
             const distance = Math.sqrt(dx * dx + dy * dy);
             return distance < c.size + Math.min(maxCircleRadius, 5 + count); // Ensure no overlap
-        }) && tries < 100 && !giveup);
+        })) && tries < 100 && !giveup );
 
         if (tries >= 100) {
             giveup = true;
