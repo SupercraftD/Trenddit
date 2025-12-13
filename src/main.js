@@ -1,4 +1,5 @@
 import "./style.css";
+import { createPostsOverTimeChart, createPostsPerSubredditChart, createKeywordTrendChart } from "../chart.js";
 
 const REDDIT_BASE = "https://www.reddit.com";
 const CORS_PROXY = "https://corsproxy.io/?";
@@ -9,7 +10,7 @@ async function fetchRedditPage(subreddit, time, after = null) {
   const params = new URLSearchParams({ t: time, limit: LIMIT });
   if (after) params.set("after", after);
 
-  const url = `${REDDIT_BASE}/r/${subreddit}/top.json?${params.toString()}`;
+  const url = `${REDDIT_BASE}/r/${subreddit}/top.json?${params.toString()}`;  
   const proxiedUrl = CORS_PROXY + encodeURIComponent(url);
 
   const res = await fetch(proxiedUrl, {
@@ -67,6 +68,9 @@ document.getElementById("fetch").addEventListener("click", async () => {
     const subreddit = "all";
     const posts = await fetchRedditAll(subreddit, "month", 10);
     clearInterval(loading);
+    createPostsOverTimeChart(posts, "myChart");
+    createPostsPerSubredditChart(posts, "subredditChart");
+    createKeywordTrendChart(posts, "cat", "keywordChart");
     output.textContent = JSON.stringify(posts, null, 2);
   } catch (err) {
     output.textContent = `Error: ${err.message}`;
