@@ -74,22 +74,3 @@ document.getElementById("fetch").addEventListener("click", async () => {
 
 });
 
-
-
-
-// // -----------------------------
-// // Example Usage
-// // -----------------------------
-// (async () => {
-//   try {
-
-//     console.log("fetching")
-
-//     const subreddit = "all";
-//     const posts = await fetchRedditAll(subreddit, "all", 10);
-
-//     console.log("Top posts:", posts);
-//   } catch (err) {
-//     console.error(err);
-//   }
-// })();
