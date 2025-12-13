@@ -15,4 +15,7 @@ canvas {
     border: 1px solid black;
     width:50%;
     margin:50px;
+    background-color: white;
+    color:black;
+    padding:25px;
 }

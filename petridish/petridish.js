@@ -114,7 +114,7 @@ async function getSubredditInfo(time){
     }
 }
 
-const maxCircleRadius = 50;
+const maxCircleRadius = 75;
 let existingCircles = [];
 let activeSubs = {}
 const canvas = document.getElementById('petridish-canvas');
