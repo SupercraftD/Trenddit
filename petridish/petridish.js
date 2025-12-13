@@ -128,6 +128,7 @@ async function getSubredditInfo(time){
             posts = await fetchRedditAll("all", time, 10)
             cache.set(time, posts)
         }
+        console.log(posts)
         for (let post of posts){
             if (!subredditInfo[time][post.subreddit]){
                 subredditInfo[time][post.subreddit] = {
@@ -142,6 +143,7 @@ async function getSubredditInfo(time){
                 }
             }
         }
+        console.log(subredditInfo[time])
         return subredditInfo[time];
     }
 }

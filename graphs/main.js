@@ -64,6 +64,7 @@ function parseRedditListing(json) {
     score: data.score,
     comments: data.num_comments,
     subreddit: data.subreddit,
+    subreddit_subscribers: data.subreddit_subscribers,
     author: data.author,
     createdUtc: data.created_utc,
     url: data.permalink ? `https://reddit.com${data.permalink}` : null,
