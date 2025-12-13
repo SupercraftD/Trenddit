@@ -119,7 +119,11 @@ let existingCircles = [];
 let activeSubs = {}
 const canvas = document.getElementById('petridish-canvas');
 
+let selectedCircle = null;
+let currentTime = "day";
+
 async function drawPetriDish(time){
+    currentTime = time;
     const ctx = canvas.getContext('2d');
 
     const width = canvas.width;
@@ -174,21 +178,84 @@ async function drawPetriDish(time){
         if (tries >= 100) {
             giveup = true;
         }
+        let color = `hsl(${Math.random() * 360}, 70%, 60%)`
 
-        existingCircles.push({x, y, size: Math.min(maxCircleRadius, 5 + count), subreddit: subreddit, count: count});
+        existingCircles.push({x, y, size: Math.min(maxCircleRadius, 5 + count), subreddit: subreddit, count: count, color:color});
 
         const size = Math.min(maxCircleRadius, 5 + count); // Size based on count, capped at maxCircleRadius
 
         // Draw the "colony"
-        ctx.fillStyle = `hsl(${Math.random() * 360}, 70%, 60%)`;
+        ctx.fillStyle = color;
         ctx.beginPath();
         ctx.arc(x, y, size, 0, Math.PI * 2);
         ctx.fill();
+
+        // Draw border if selected
+        if (selectedCircle && selectedCircle.subreddit === subreddit) {
+            ctx.strokeStyle = "#000000";
+            ctx.lineWidth = 3;
+            ctx.stroke();
+        }
+    }
+}
+
+function drawCircles(){
+    const ctx = canvas.getContext('2d');
+
+    const width = canvas.width;
+    const height = canvas.height;
+
+    // Fill the canvas with a light grid background
+    ctx.fillStyle = '#ffffffff';
+    ctx.strokeStyle = '#d4d4d4ff';
+
+    const gridSize = 20;
+    for (let x = 0; x <= width; x += gridSize) {
+        for (let y = 0; y <= height; y += gridSize) {
+            ctx.fillRect(x, y, gridSize - 1, gridSize - 1);
+            ctx.strokeRect(x, y, gridSize, gridSize);
+        }
+    }
+    
+    // Draw a simple circle in the center
+    ctx.fillStyle = "#ffffff";
+    ctx.strokeStyle = "#000000";
+    ctx.beginPath();
+    ctx.arc(width / 2, height / 2, Math.min(height,width)/2-20, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.fill();
+
+    for (let circle of existingCircles){
+        let count = circle.count
+        let subreddit = circle.subreddit
+        let x = circle.x
+        let y = circle.y
+        
+        const size = Math.min(maxCircleRadius, 5 + count); // Size based on count, capped at maxCircleRadius
+
+        // Draw the "colony"
+        ctx.fillStyle = circle.color;
+        ctx.beginPath();
+        ctx.arc(x, y, size, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Draw border if selected
+        if (selectedCircle && selectedCircle.subreddit === subreddit) {
+            ctx.strokeStyle = "#000000";
+            ctx.lineWidth = 3;
+            ctx.stroke();
+        }
+
     }
 }
 
 //display info when circle is hovered over
 canvas.addEventListener('mousemove', function(event) {
+
+    if (selectedCircle != null){
+        return
+    }
+
     const rect = canvas.getBoundingClientRect();
     const mouseX = event.clientX - rect.left;
     const mouseY = event.clientY - rect.top;
@@ -226,10 +293,58 @@ canvas.addEventListener('mousemove', function(event) {
 
 });
 
+canvas.addEventListener("mousedown", function(event){
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = event.clientX - rect.left;
+    const mouseY = event.clientY - rect.top;
+
+    const canvasX = mouseX * canvas.width / rect.width;
+    const canvasY = mouseY * canvas.height / rect.height;
+
+    let hoveredCircle = null;
+    for (let circle of existingCircles) {
+        const dx = circle.x - canvasX;
+        const dy = circle.y - canvasY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < circle.size) {
+            hoveredCircle = circle;
+        }
+    }
+
+    if (hoveredCircle) {
+
+        if (hoveredCircle == selectedCircle){
+            selectedCircle = null
+        }else{
+            selectedCircle = hoveredCircle
+        }
+
+        drawCircles();
+
+        document.getElementById("subredditname").textContent = `r/${hoveredCircle.subreddit}`;
+        document.getElementById("subredditinfo").textContent = `${activeSubs[hoveredCircle.subreddit] ? activeSubs[hoveredCircle.subreddit].subscribers : "N/A"} Subscribers, Recent Posts: ${hoveredCircle.count}`;
+        document.getElementById("toppostlist").innerHTML = ``;
+
+        for (let post of activeSubs[hoveredCircle.subreddit].topPosts){
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = post.url;
+            a.textContent = `${post.title} (Score: ${post.score})`;
+            a.target = "_blank";
+            li.appendChild(a);
+            document.getElementById("toppostlist").appendChild(li);
+        }
+
+    
+
+    }
+})
+
 window.onload = function() {
     drawPetriDish("day");
 }
 
 document.getElementById("times").onchange = function(){
+    selectedCircle = null;
     drawPetriDish(document.getElementById("times").value)
 }
