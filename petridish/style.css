@@ -1,6 +1,18 @@
 
+#container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 canvas {
     border: 1px solid black;
     width: 50%;
     height: auto;
+}
+
+#infopanel{
+    border: 1px solid black;
+    width:50%;
+    margin:50px;
 }

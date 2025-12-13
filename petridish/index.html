@@ -11,7 +11,26 @@
     <h1>Trenddit: Petri Dish</h1>
     <h2>Cultivate your online presence</h2>
 
-    <canvas id="petridish-canvas" width="800" height="600" style="border:1px solid #000000;"></canvas>
+    <label for="times">Choose a timeframe:</label>
+
+    <select name="times" id="times">
+        <option value="day">day</option>
+        <option value="month">month</option>
+        <option value="all">all</option>
+    </select>
+
+    <hr/>
+
+    <div id="container">
+        <canvas id="petridish-canvas" width="800" height="600" style="border:1px solid #000000;"></canvas>
+        <div id="infopanel">
+
+            <h3 id="subredditname">Subreddit Colony Info</h3>
+            <p id="subredditinfo">Hover over a colony to see details here.</p>
+            <p><b>Top Posts:</b></p>
+            <ol id="toppostlist"></ol>
+        </div>
+    </div>
 
     <script type="module" src="petridish.js"></script>
 </body>

@@ -1,4 +1,5 @@
 
+
 const REDDIT_BASE = "https://www.reddit.com";
 const CORS_PROXY = "https://corsproxy.io/?";
 const LIMIT = 100;
@@ -30,6 +31,7 @@ function parseRedditListing(json) {
     score: data.score,
     comments: data.num_comments,
     subreddit: data.subreddit,
+    subreddit_subscribers: data.subreddit_subscribers,
     author: data.author,
     createdUtc: data.created_utc,
     url: data.permalink ? `https://reddit.com${data.permalink}` : null,
@@ -62,10 +64,20 @@ let distributions = {
     "all":{}
 }
 
+let subredditInfo = {
+    "day":{},
+    "week":{},
+    "month":{},
+    "all":{}
+}
+
 async function getDistributions(time){
-    if (distributions[time] == {}) {
+
+    if (Object.keys(distributions[time]).length > 0) {
+        console.log(distributions[time])
         return distributions[time];
     }else{
+        console.log("FETCHING DISTRIBUTION")
         const posts = await fetchRedditAll("all", time, 10);
         
         for (let post of posts){
@@ -79,7 +91,32 @@ async function getDistributions(time){
     }
 }
 
+async function getSubredditInfo(time){
+    if (Object.keys(subredditInfo[time]).length > 0) {
+        return subredditInfo[time];
+    }else{
+        const posts = await fetchRedditAll("all", time, 10);
+        for (let post of posts){
+            if (!subredditInfo[time][post.subreddit]){
+                subredditInfo[time][post.subreddit] = {
+                    subscribers: post.subreddit_subscribers,
+                    topPosts: [post]
+                }
+            }else{
+                subredditInfo[time][post.subreddit].topPosts.push(post);
+                subredditInfo[time][post.subreddit].topPosts.sort((a,b) => b.score - a.score);
+                if (subredditInfo[time][post.subreddit].topPosts.length > 5){
+                    subredditInfo[time][post.subreddit].topPosts.pop();
+                }
+            }
+        }
+        return subredditInfo[time];
+    }
+}
+
+const maxCircleRadius = 50;
 let existingCircles = [];
+let activeSubs = {}
 const canvas = document.getElementById('petridish-canvas');
 
 async function drawPetriDish(time){
@@ -110,6 +147,8 @@ async function drawPetriDish(time){
 
     const distribution = await getDistributions(time);
     const subreddits = Object.keys(distribution);
+    activeSubs = await getSubredditInfo(time);
+    console.log(activeSubs);
 
     existingCircles = [];
 
@@ -129,16 +168,16 @@ async function drawPetriDish(time){
             const dx = c.x - x;
             const dy = c.y - y;
             const distance = Math.sqrt(dx * dx + dy * dy);
-            return distance < c.size + Math.min(30, 5 + count); // Ensure no overlap
+            return distance < c.size + Math.min(maxCircleRadius, 5 + count); // Ensure no overlap
         }) && tries < 100 && !giveup);
 
         if (tries >= 100) {
             giveup = true;
         }
 
-        existingCircles.push({x, y, size: Math.min(30, 5 + count), subreddit: subreddit, count: count});
+        existingCircles.push({x, y, size: Math.min(maxCircleRadius, 5 + count), subreddit: subreddit, count: count});
 
-        const size = Math.min(30, 5 + count); // Size based on count, capped at 30
+        const size = Math.min(maxCircleRadius, 5 + count); // Size based on count, capped at maxCircleRadius
 
         // Draw the "colony"
         ctx.fillStyle = `hsl(${Math.random() * 360}, 70%, 60%)`;
@@ -154,27 +193,43 @@ canvas.addEventListener('mousemove', function(event) {
     const mouseX = event.clientX - rect.left;
     const mouseY = event.clientY - rect.top;
 
-    console.log(`Mouse at: ${mouseX}, ${mouseY}`);
+    const canvasX = mouseX * canvas.width / rect.width;
+    const canvasY = mouseY * canvas.height / rect.height;
 
     let hoveredCircle = null;
     for (let circle of existingCircles) {
-        const dx = circle.x - mouseX;
-        const dy = circle.y - mouseY;
+        const dx = circle.x - canvasX;
+        const dy = circle.y - canvasY;
         const distance = Math.sqrt(dx * dx + dy * dy);
         if (distance < circle.size) {
             hoveredCircle = circle;
-            break;
         }
     }
 
     if (hoveredCircle) {
-        // Show info about the hovered circle
-        console.log(`posiitioned over circle at (${hoveredCircle.x}, ${hoveredCircle.y})`);
-        console.log(`Subreddit: ${hoveredCircle.subreddit}, Count: ${hoveredCircle.count}`);
+        document.getElementById("subredditname").textContent = `r/${hoveredCircle.subreddit}`;
+        document.getElementById("subredditinfo").textContent = `${activeSubs[hoveredCircle.subreddit] ? activeSubs[hoveredCircle.subreddit].subscribers : "N/A"} Subscribers, Recent Posts: ${hoveredCircle.count}`;
+        document.getElementById("toppostlist").innerHTML = ``;
+
+        for (let post of activeSubs[hoveredCircle.subreddit].topPosts){
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = post.url;
+            a.textContent = `${post.title} (Score: ${post.score})`;
+            a.target = "_blank";
+            li.appendChild(a);
+            document.getElementById("toppostlist").appendChild(li);
+        }
+
     }
+    
+
 });
 
 window.onload = function() {
-    drawPetriDish("month");
+    drawPetriDish("day");
 }
 
+document.getElementById("times").onchange = function(){
+    drawPetriDish(document.getElementById("times").value)
+}
