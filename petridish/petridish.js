@@ -150,10 +150,15 @@ async function drawPetriDish(time){
     ctx.stroke();
     ctx.fill();
 
+
+    document.getElementById("loading").innerHTML = "Loading..."
+    
     const distribution = await getDistributions(time);
     const subreddits = Object.keys(distribution);
     activeSubs = await getSubredditInfo(time);
     console.log(activeSubs);
+    
+    document.getElementById("loading").innerHTML = ""
 
     existingCircles = [];
 
