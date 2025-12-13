@@ -55,20 +55,40 @@ export function createPostsOverTimeChart(posts, canvasId, timeframe = 'month') {
         title: {
           display: true,
           text: isHourly ? 'Reddit Posts by Hour' : 'Reddit Posts Over Time'
+        },
+        legend: {
+          labels: {
+            color: 'rgba(255, 255, 255, 0.9)'
+          }
         }
       },
+      backgroundColor: 'rgba(0, 0, 0, 0.3)',
       scales: {
         y: {
           beginAtZero: true,
           title: {
             display: true,
-            text: 'Number of Posts'
+            text: 'Number of Posts',
+            color: 'rgba(255, 255, 255, 0.9)'
+          },
+          ticks: {
+            color: 'rgba(255, 255, 255, 0.8)'
+          },
+          grid: {
+            color: 'rgba(255, 255, 255, 0.2)'
           }
         },
         x: {
           title: {
             display: true,
-            text: isHourly ? 'Hour' : 'Date'
+            text: isHourly ? 'Hour' : 'Date',
+            color: 'rgba(255, 255, 255, 0.9)'
+          },
+          ticks: {
+            color: 'rgba(255, 255, 255, 0.8)'
+          },
+          grid: {
+            color: 'rgba(255, 255, 255, 0.2)'
           }
         }
       }
@@ -122,14 +142,35 @@ export function createAverageScoreChart(posts, canvasId) {
         title: {
           display: true,
           text: 'Average Post Score Over Time'
+        },
+        legend: {
+          labels: {
+            color: 'rgba(255, 255, 255, 0.9)'
+          }
         }
       },
+      backgroundColor: 'rgba(0, 0, 0, 0.3)',
       scales: {
         y: {
           beginAtZero: true,
           title: {
             display: true,
-            text: 'Average Score'
+            text: 'Average Score',
+            color: 'rgba(255, 255, 255, 0.9)'
+          },
+          ticks: {
+            color: 'rgba(255, 255, 255, 0.8)'
+          },
+          grid: {
+            color: 'rgba(255, 255, 255, 0.2)'
+          }
+        },
+        x: {
+          ticks: {
+            color: 'rgba(255, 255, 255, 0.8)'
+          },
+          grid: {
+            color: 'rgba(255, 255, 255, 0.2)'
           }
         }
       }
@@ -182,20 +223,40 @@ export function createPostsPerSubredditChart(posts, canvasId) {
         title: {
           display: true,
           text: 'Posts per Subreddit'
+        },
+        legend: {
+          labels: {
+            color: 'rgba(255, 255, 255, 0.9)'
+          }
         }
       },
+      backgroundColor: 'rgba(0, 0, 0, 0.3)',
       scales: {
         y: {
           beginAtZero: true,
           title: {
             display: true,
-            text: 'Number of Posts'
+            text: 'Number of Posts',
+            color: 'rgba(255, 255, 255, 0.9)'
+          },
+          ticks: {
+            color: 'rgba(255, 255, 255, 0.8)'
+          },
+          grid: {
+            color: 'rgba(255, 255, 255, 0.2)'
           }
         },
         x: {
           title: {
             display: true,
-            text: 'Subreddit'
+            text: 'Subreddit',
+            color: 'rgba(255, 255, 255, 0.9)'
+          },
+          ticks: {
+            color: 'rgba(255, 255, 255, 0.8)'
+          },
+          grid: {
+            color: 'rgba(255, 255, 255, 0.2)'
           }
         }
       }
@@ -290,8 +351,14 @@ export function createKeywordTrendChart(posts, keyword, canvasId, timeframe = 'm
         title: {
           display: true,
           text: `Keyword Trend: "${keyword}" ${isHourly ? 'by Hour' : 'Over Time'}`
+        },
+        legend: {
+          labels: {
+            color: 'rgba(255, 255, 255, 0.9)'
+          }
         }
       },
+      backgroundColor: 'rgba(0, 0, 0, 0.3)',
       scales: {
         y: {
           type: 'linear',
@@ -300,7 +367,14 @@ export function createKeywordTrendChart(posts, keyword, canvasId, timeframe = 'm
           beginAtZero: true,
           title: {
             display: true,
-            text: 'Number of Posts'
+            text: 'Number of Posts',
+            color: 'rgba(255, 255, 255, 0.9)'
+          },
+          ticks: {
+            color: 'rgba(255, 255, 255, 0.8)'
+          },
+          grid: {
+            color: 'rgba(255, 255, 255, 0.2)'
           }
         },
         y1: {
@@ -311,16 +385,28 @@ export function createKeywordTrendChart(posts, keyword, canvasId, timeframe = 'm
           max: 100,
           title: {
             display: true,
-            text: 'Percentage (%)'
+            text: 'Percentage (%)',
+            color: 'rgba(255, 255, 255, 0.9)'
+          },
+          ticks: {
+            color: 'rgba(255, 255, 255, 0.8)'
           },
           grid: {
-            drawOnChartArea: false
+            drawOnChartArea: false,
+            color: 'rgba(255, 255, 255, 0.2)'
           }
         },
         x: {
           title: {
             display: true,
-            text: isHourly ? 'Hour' : 'Date'
+            text: isHourly ? 'Hour' : 'Date',
+            color: 'rgba(255, 255, 255, 0.9)'
+          },
+          ticks: {
+            color: 'rgba(255, 255, 255, 0.8)'
+          },
+          grid: {
+            color: 'rgba(255, 255, 255, 0.2)'
           }
         }
       }

@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel = "stylesheet" href = "/src/style.css">
     <title>Trenddit</title>
   </head>
   <body>
@@ -14,31 +15,12 @@
           <p class="tagline">Track what’s trending and when it peaked.</p>
         </div>
 
-      <div>
-        <label for="timeframe">Timeframe:</label>
-        <select id="timeframe">
-          <option value="day">Day</option>
-          <option value="month" selected>Month</option>
-          <option value="all">All Time</option>
-        </select>
-      </div>
-
-      <div>
-        <label for="keyword">Keyword Search:</label>
-        <input type="text" id="keyword" placeholder="Enter keyword (e.g., cat)" value="cat">
-      </div>
-
-      <button id="fetch">Fetch Posts</button>
+      <a href = "/graphs/">Graphs</a>
 
       <a href="/petridish/">Petri Dish</a>
 
-      <canvas id="myChart"></canvas>
-      <canvas id="subredditChart"></canvas>
-      <canvas id="keywordChart"></canvas>
-      <pre id="output"></pre>
-
     </div>
-    <script type="module" src="/src/main.js"></script>
+
     <script type="module" src="/ai.js"></script>
   </body>
 </html>
