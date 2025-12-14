@@ -142,12 +142,12 @@ window.onload = async function(){
 
 let paths = {
     "Blue":{
-        "run":"sprites/bluerun.gif",
-        "die":"sprites/bluedie.gif"
+        "run":"/sprites/bluerun.gif",
+        "die":"/sprites/bluedie.gif"
     },
     "White":{
-        "run":"sprites/whiterun.gif",
-        "die":"sprites/whitedie.gif"
+        "run":"/sprites/whiterun.gif",
+        "die":"/sprites/whitedie.gif"
     }
 }
 
