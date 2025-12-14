@@ -94,7 +94,7 @@ body {
 
 .preview-card {
   color: inherit;
-
+  text-align: center;
   border-radius: 14px;
   overflow: hidden;
 
