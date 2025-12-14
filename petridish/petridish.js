@@ -25,7 +25,7 @@ const cache = {
 };
 
 const REDDIT_BASE = "https://www.reddit.com";
-const CORS_PROXY = "https://corsproxy.io/?";
+const CORS_PROXY = "https://mycorsproxy.dzhu700.workers.dev/?url=";
 const LIMIT = 100;
 
 // Fetch a single Reddit page via CORS proxy
@@ -41,7 +41,7 @@ async function fetchRedditPage(subreddit, time, after = null) {
       "User-Agent": "hackathon-trend-visualizer/1.0"
     }
   });
-
+  
   if (!res.ok) throw new Error(`Reddit request failed: ${res.status}`);
   return res.json();
 }
