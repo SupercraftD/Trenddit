@@ -1,8 +1,6 @@
 # Trenddit: The website for tracking reddit trends
 
-Trenddit is a website that offers interactive visualization tools to view and analyze      trends over time. These tools include a graph feature, petri dish "culture"/subreddit  
-viewer, an AI assistant to help with your posts, and a small minigame to test your reddit  
-knowledge
+Trenddit is a website that offers interactive visualization tools to view and analyze trends over time. These tools include a graph feature petri dish "culture"/subreddit viewer, an AI assistant to help with your posts, and a small minigame to test your reddit knowledge
 
 ## Image citations:
 ```
