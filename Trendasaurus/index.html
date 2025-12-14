@@ -6,23 +6,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel = "stylesheet" href = "/src/style.css">
     <link rel="stylesheet" href="/graphs/graphs.css" />
+    <link rel="stylesheet" href="style.css" />
 
     <title>Trenddit</title>
   </head>
   <body>
-          <div id = "topbar">
+        <div id = "topbar">
           <p id = "topbartext"> <a href = "/" >Trenddit</a></p>
           <div id="rightalignbuttons">
             <button onclick="window.location.href='/petridish/'">Petri Dish</button>
             <button onclick="window.location.href='/aihelper/'">AI Assistant</button>
             <button onclick="window.location.href='/graphs/'">Graphs</button>
             <button onclick="window.location.href='/Trendasaurus/'">Trendasaurus</button>
-
           </div>
       </div>
     <div id="app">
+        <h1>Trendasaurus</h1>
+        <h2>Train your ability to predict trends and what goes viral!</h2>
 
+        <br>
+
+        <div id="game">
+
+            <button id="start" disabled>Start Practice</button>
+            <br />
+            <h3 id="question"></h3>
+            <div id="dinos">
+                
+                <div id="answer1">
+                    <img id="dino1" /><br/>
+                    <button id="answerselection1"></button>
+                </div>
+                <div id="answer2">
+                    <img id="dino2" /><br/> 
+                    <button id="answerselection2"></button>
+                </div>
+            </div>
+
+
+        </div>
     </div>
 
+
+    <script type="module" src="trendasaurus.js"></script>
   </body>
 </html>
