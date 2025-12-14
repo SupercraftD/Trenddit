@@ -2,7 +2,7 @@
 import { createPostsOverTimeChart, createPostsPerSubredditChart, createKeywordTrendChart } from "./chart.js";
 
 const REDDIT_BASE = "https://www.reddit.com";
-const CORS_PROXY = "https://corsproxy.io/?";
+const CORS_PROXY = "https://mycorsproxy.dzhu700.workers.dev/?url=";
 const LIMIT = 100;
 
 // Store chart instances to destroy them later
@@ -79,19 +79,19 @@ function parseRedditListing(json) {
 async function fetchRedditAll(subreddit = "all", time = "day", maxPages = 5) {
   let allPosts = [];
   let after = null;
-
+  maxPages = 1
   for (let page = 0; page < maxPages; page++) {
     const json = await fetchRedditPage(subreddit, time, after);
-    const posts = parseRedditListing(json);
+    const posts = json;
+    console.log(posts)
     if (posts.length === 0) break;
 
     allPosts.push(...posts);
-    after = json.data.after;
-    if (!after) break;
   }
 
   return allPosts;
 }
+
 
 // Wrap canvases in blur containers on page load
 document.addEventListener("DOMContentLoaded", () => {

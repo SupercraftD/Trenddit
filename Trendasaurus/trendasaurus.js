@@ -23,7 +23,7 @@ const cache = {
 };
 
 const REDDIT_BASE = "https://www.reddit.com";
-const CORS_PROXY = "https://corsproxy.io/?";
+const CORS_PROXY = "https://mycorsproxy.dzhu700.workers.dev/?url=";
 const LIMIT = 100;
 
 // Fetch a single Reddit page via CORS proxy
@@ -68,19 +68,19 @@ function parseRedditListing(json) {
 async function fetchRedditAll(subreddit = "all", time = "day", maxPages = 5) {
   let allPosts = [];
   let after = null;
-
+  maxPages = 1
   for (let page = 0; page < maxPages; page++) {
     const json = await fetchRedditPage(subreddit, time, after);
-    const posts = parseRedditListing(json);
+    const posts = json;
+    console.log(posts)
     if (posts.length === 0) break;
 
     allPosts.push(...posts);
-    after = json.data.after;
-    if (!after) break;
   }
 
   return allPosts;
 }
+
 
 const STOP_WORDS = new Set([
   "the", "a", "an", "and", "or", "but", "if", "then", "else",

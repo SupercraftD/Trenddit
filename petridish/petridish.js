@@ -35,7 +35,7 @@ async function fetchRedditPage(subreddit, time, after = null) {
 
   const url = `${REDDIT_BASE}/r/${subreddit}/top.json?${params.toString()}`;
   const proxiedUrl = CORS_PROXY + encodeURIComponent(url);
-
+    console.log("IM FINNA SEND A REQ TO " + proxiedUrl)
   const res = await fetch(proxiedUrl, {
     headers: {
       "User-Agent": "hackathon-trend-visualizer/1.0"
@@ -70,15 +70,15 @@ function parseRedditListing(json) {
 async function fetchRedditAll(subreddit = "all", time = "day", maxPages = 5) {
   let allPosts = [];
   let after = null;
-
+  maxPages = 1
   for (let page = 0; page < maxPages; page++) {
     const json = await fetchRedditPage(subreddit, time, after);
-    const posts = parseRedditListing(json);
+    const posts = json;
+    console.log("I REQUEST THIS TIME "+ time)
+    console.log(posts)
     if (posts.length === 0) break;
 
     allPosts.push(...posts);
-    after = json.data.after;
-    if (!after) break;
   }
 
   return allPosts;
@@ -139,6 +139,9 @@ async function getSubredditInfo(time){
                     topPosts: [post]
                 }
             }else{
+                if (subredditInfo[time][post.subreddit].topPosts.includes(post)){
+                    continue
+                }
                 subredditInfo[time][post.subreddit].topPosts.push(post);
                 subredditInfo[time][post.subreddit].topPosts.sort((a,b) => b.score - a.score);
                 if (subredditInfo[time][post.subreddit].topPosts.length > 5){
@@ -151,7 +154,7 @@ async function getSubredditInfo(time){
     }
 }
 
-const maxCircleRadius = 75;
+const maxCircleRadius = 50;
 let existingCircles = [];
 let activeSubs = {}
 const canvas = document.getElementById('petridish-canvas');
