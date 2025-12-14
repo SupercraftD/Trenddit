@@ -47,7 +47,7 @@ async function fetchRedditPage(subreddit, time, after = null) {
 // Parse Reddit JSON to clean array
 function parseRedditListing(json) {
   if (!json?.data?.children) return [];
-  return json.data.children.map(({ data }) => ({
+  let a = json.data.children.map(({ data }) => ({
     id: data.id,
     title: data.title,
     score: data.score,
@@ -59,6 +59,9 @@ function parseRedditListing(json) {
     url: data.permalink ? `https://reddit.com${data.permalink}` : null,
     nsfw: data.over_18
   }));
+
+  a = a.filter(item => !item.nsfw);
+  return a;
 }
 
 // Fetch all pages for a time window (paginated)
