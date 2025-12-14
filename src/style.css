@@ -80,7 +80,27 @@ body {
   
 }
 
-.right {
-    font-weight:700;
-    font-size:18px;
+.tagline {
+  text-align: center;
+  font-size: 30px;
+  opacity: 0.85;
 }
+
+.page-previews {
+  margin-top: 28px;
+  display: grid;
+  gap: 16px;
+}
+
+.preview-card {
+  color: inherit;
+
+  border-radius: 14px;
+  overflow: hidden;
+
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255,255,255,0.12);
+  backdrop-filter: blur(6px);
+}
+
+
