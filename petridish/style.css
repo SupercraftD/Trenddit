@@ -3,7 +3,7 @@ body {
   margin: 0;
   min-height: 100vh;
 
-  background-image: url("/bg2.jpg");
+  background-image: url("/bg2.jpg") !important;
 
 
   background-size: cover;        
@@ -40,7 +40,7 @@ canvas {
     width:50%;
     margin:50px;
     color:white;
-    background-color: rgba(0, 0, 0, 0.611);
+    background-color: rgba(0, 0, 0, 0.46);
     padding:25px;
     border-radius: 50px;
 }
